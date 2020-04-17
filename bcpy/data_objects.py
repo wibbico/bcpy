@@ -72,7 +72,7 @@ class FlatFile(DataObject):
 
         Note: Caller of this method assumes that the file has headers.
         """
-        with open(self.path, encoding='utf-8-sig') as f:
+        with open(self.path, encoding='cp1252') as f:
             header = f.readline()
         qualifier_delimiter_combo = str.format('{0}{1}{0}', self.qualifier,
                                                self.delimiter)
@@ -318,7 +318,9 @@ class DataFrame(DataObject):
             quotechar=qualifier,
             quoting=csv.QUOTE_ALL,
             line_terminator=newline,
-            path_or_buf=csv_file_path)
+            path_or_buf=csv_file_path,
+            encoding='cp1252'
+        )
         self._flat_file_object = FlatFile(
             delimiter=',',
             qualifier=qualifier,
