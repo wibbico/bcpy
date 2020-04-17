@@ -25,6 +25,10 @@ def bcp(sql_table, flat_file, batch_size):
                    sql_table.server, '-b', str(batch_size)] + auth
     if flat_file.file_has_header_line:
         bcp_command += ['-F', '2']
+        
+    # support german umlaute
+    bcp_command += ['-C', '65001']  
+      
     result = subprocess.run(bcp_command, stderr=subprocess.PIPE)
     if result.returncode:
         raise Exception(
